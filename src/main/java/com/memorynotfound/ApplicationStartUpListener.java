@@ -1,5 +1,7 @@
 package com.memorynotfound;
 
+import java.util.Date;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,6 +21,8 @@ public class ApplicationStartUpListener implements ServletContextListener {
 
         System.out.println("initialize new thread-pool and use it in application scope");
         applicationThreadPool = Executors.newFixedThreadPool(3);
+        applicationThreadPool.submit(getNewCallableTask("thread-1"));
+        applicationThreadPool.submit(getNewCallableTask("thread-2"));
 
         event.getServletContext().setAttribute(THREAD_POOL_ATTRIBUTE_NAME, applicationThreadPool);
     }
@@ -27,9 +31,19 @@ public class ApplicationStartUpListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent event) {
         System.out.println("---- destroying servlet context -----");
 
-        System.out.println("Shutdown threadpool before shutting down Tomcat server!");
-        applicationThreadPool.shutdownNow();
+        // comment below lines in order to express memory leak warnings
+         System.out.println("Shutdown threadpool before shutting down Tomcat server!");
+         applicationThreadPool.shutdownNow();
 
         event.getServletContext().removeAttribute(THREAD_POOL_ATTRIBUTE_NAME);
+    }
+
+    private Callable getNewCallableTask(String threadName) {
+        return new Callable() {
+            public Object call() {
+                System.out.println(threadName + " is executed at" + new Date().toString());
+                return null;
+            }
+        };
     }
 }
