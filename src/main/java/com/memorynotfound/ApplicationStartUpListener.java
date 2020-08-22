@@ -32,8 +32,8 @@ public class ApplicationStartUpListener implements ServletContextListener {
         System.out.println("---- destroying servlet context -----");
 
         // comment below lines in order to express memory leak warnings
-         System.out.println("Shutdown threadpool before shutting down Tomcat server!");
-         applicationThreadPool.shutdownNow();
+        System.out.println("Shutdown threadpool before shutting down Tomcat server!");
+        applicationThreadPool.shutdownNow();
 
         event.getServletContext().removeAttribute(THREAD_POOL_ATTRIBUTE_NAME);
     }
