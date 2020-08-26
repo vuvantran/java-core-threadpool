@@ -1,4 +1,4 @@
-package com.memorynotfound;
+package vu.tran.threadpool;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebListener;
 public class ApplicationStartUpListener implements ServletContextListener {
 
     private ExecutorService applicationThreadPool;
-    public static final String THREAD_POOL_ATTRIBUTE_NAME = "applicationThreadPool";
+    public static final String THREAD_POOL_ATTRIBUTE_NAME = "ApplicationStartUpListener";
 
     @Override
     public void contextInitialized(ServletContextEvent event) {

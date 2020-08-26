@@ -1,18 +1,18 @@
-package com.memorynotfound.resource;
+package vu.tran.resource;
 
-import com.memorynotfound.ApplicationStartUpListener;
+import java.util.concurrent.ExecutorService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 
-@WebServlet(name = "OrderServlet", value = "/order")
-public class OrderServlet extends HttpServlet {
+import vu.tran.threadpool.ApplicationStartUpListener;
+import vu.tran.util.ThreadUtil;
+
+@WebServlet(urlPatterns = "/applicationStartUpListener/submitNewTask", loadOnStartup = 1)
+public class ApplicationStartUpTestServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,16 +21,8 @@ public class OrderServlet extends HttpServlet {
 
         ExecutorService threadPool = (ExecutorService) ctx.getAttribute(ApplicationStartUpListener.THREAD_POOL_ATTRIBUTE_NAME);
         System.out.println("Thread-pool is already shutdown? " + threadPool.isShutdown());
-        threadPool.submit(this.getNewCallableTask());
-    }
-
-    private Callable getNewCallableTask() {
-        return new Callable() {
-            public Object call() {
-                System.out.println("The order is executed at" + new Date().toString());
-                return null;
-            }
-        };
+        System.out.println("Submit new task to thread-pool");
+        threadPool.submit(ThreadUtil.getNewCallableTask(ApplicationStartUpListener.THREAD_POOL_ATTRIBUTE_NAME));
     }
 
 }
