@@ -26,6 +26,11 @@ This project was download from website: https://memorynotfound.com/servletcontex
    docker run -it --rm -p 8888:8080 servlet-context-listener
 ```
 
+### Test kinds of thread pool by this URL
+```
+   http://localhost:8888/servlet-context-listener-1.0.0-SNAPSHOT/folkJoinTestServlet/submitNewTask?testcase=2
+```
+
 ## Reproduce Tomcat memory leak warnings
 1. Comment lines relating to shutdown thread-pool in contextDestroyed method of class [ApplicationStartUpListener.java](src/main/java/com/memorynotfound/ApplicationStartUpListener.java) to express Tomcat memory leak warnings!
 
