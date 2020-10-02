@@ -28,7 +28,10 @@ This project was download from website: https://memorynotfound.com/servletcontex
 
 ### Test kinds of thread pool by this URL
 ```
-   http://localhost:8888/servlet-context-listener-1.0.0-SNAPSHOT/folkJoinTestServlet/submitNewTask?testcase=2
+   testcase: (1) ForkJoinPool.getCommonPool(); (2) defined ForkJoinPool; (3) ExecutorService of Executors
+   size: number of active threads in pool
+   
+   http://localhost:8888/servlet-context-listener-1.0.0-SNAPSHOT/folkJoinTestServlet/submitNewTask?testcase=2&size=10
 ```
 
 ## Reproduce Tomcat memory leak warnings
